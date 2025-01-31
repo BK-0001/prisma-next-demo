@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma";
 import { Prisma, Todo } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import Form from "next/form";
 import { redirect } from "next/navigation";
 
@@ -23,6 +24,7 @@ const createTodo = async (id: number, formData: FormData) => {
 
   console.log(todoUpdated);
 
+  revalidatePath("/todos");
   redirect("/todos");
 };
 
