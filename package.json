@@ -10,7 +10,7 @@
     "db:reset": "prisma migrate reset"
   },
   "prisma": {
-    "seed": "TODO: npx tsnd --inspect -- prisma/seed.ts"
+    "seed": "tsnd --inspect -- prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.3.0",
