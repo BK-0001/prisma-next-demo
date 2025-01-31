@@ -28,7 +28,7 @@ const createTodo = async (id: number, formData: FormData) => {
 
 export default function TodoForm({ todos }: Props) {
   return (
-    <ul className="">
+    <ul className="flex-1 border p-4">
       {todos.map(({ id, title, isCompleted }) => (
         <li key={id}>
           {title}

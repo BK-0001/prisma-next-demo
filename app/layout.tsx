@@ -22,18 +22,17 @@ type Props = {
   children: ReactNode;
   cats: ReactNode;
   dogs: ReactNode;
-  todos: ReactNode;
 };
 
-export default function RootLayout({ children, cats, dogs, todos }: Props) {
+export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex space-x-4`}
       >
-        {cats}
-        {dogs}
-        {todos}
+        {/* {cats}
+        {dogs} */}
+
         {children}
       </body>
     </html>
