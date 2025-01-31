@@ -2,7 +2,6 @@ import { prisma } from "@/prisma";
 import { Prisma, Todo } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import Form from "next/form";
-import { redirect } from "next/navigation";
 
 type Props = {
   todos: Todo[];
@@ -11,38 +10,36 @@ type Props = {
 const createTodo = async (id: number, formData: FormData) => {
   "use server";
 
-  const title = (formData.get("todo") || "") as string;
+  const isCompleted = formData.get("is-completed");
 
   const updatedTodo: Prisma.TodoUpdateInput = {
-    title
+    isCompleted: isCompleted === "on"
   };
 
-  const todoUpdated = await prisma.todo.update({
+  await prisma.todo.update({
     where: { id },
     data: updatedTodo
   });
 
-  console.log(todoUpdated);
-
   revalidatePath("/todos");
-  redirect("/todos");
 };
 
 export default function TodoForm({ todos }: Props) {
   return (
-    <ul className="flex-1 border p-4">
+    <ul className="p-4">
       {todos.map(({ id, title, isCompleted }) => (
         <li key={id}>
-          {title}
-          <Form action={createTodo.bind(null, id)}>
-            <input
-              type="checkbox"
-              name=""
-              id={`${id}-${title}`}
-              defaultChecked={isCompleted}
-            />
-            <input defaultValue={title} name="todo" />
-            <button>Save</button>
+          <Form className="flex space-x-2" action={createTodo.bind(null, id)}>
+            <div className="space-x-2">
+              <input
+                type="checkbox"
+                name="is-completed"
+                id={`${id}-${title}`}
+                defaultChecked={isCompleted}
+              />
+              <label htmlFor={`${id}-${title}`}>{title}</label>
+            </div>
+            <button>SAVE</button>
           </Form>
         </li>
       ))}
